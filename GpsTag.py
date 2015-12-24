@@ -34,25 +34,12 @@ def tagFile(filePath, gMatch):
      filePath
     tagResult = subprocess.call(tagCmd, shell=True)
     touchCmd = 'touch -r ' + filePath + '_original ' + filePath
-    touchResult = subprocess.call(touchCmd, shell=True)
+    touchResult = 0
+    if tagResult == 0:
+        touchResult = subprocess.call(touchCmd, shell=True)
     if tagResult + touchResult == 0:
         tidyCmd = 'rm ' + filePath + '_original'
         subprocess.call(tidyCmd, shell=True)
-
-
-
-def getLatRefFromMatch(match):
-    return '-GPSLatitudeRef=' + match.group(1) + ''
-
-def getLatFromMatch(match):
-    return '-GPSLatitude=\"' + match.group(2) + ', ' + match.group(3) + ', ' + match.group(4) + '\"'
-
-def getLongRefFromMatch(match):
-    return '-GPSLongitudeRef=' + match.group(5) + ''
-
-def getLongFromMatch(match):
-    return '-GPSLongitude=\"' + match.group(6) + ', ' + match.group(7) + ', ' + match.group(8) + '\"'
-
 
 
 def main():
